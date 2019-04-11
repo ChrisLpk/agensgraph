@@ -312,6 +312,7 @@ _readNotifyStmt(void)
 	READ_DONE();
 }
 
+
 /*
  * _readDeclareCursorStmt
  */
@@ -2691,6 +2692,17 @@ _readPartitionRangeDatum(void)
 
 	READ_DONE();
 }
+static CopyRdfStmt *
+_readCopyRdfStmt(void)
+{
+	READ_LOCALS(CopyRdfStmt);
+
+	READ_STRING_FIELD(filename);
+
+	READ_DONE();
+
+}
+
 
 /*
  * parseNodeString
@@ -2766,6 +2778,8 @@ parseNodeString(void)
 		return_value = _readBoolExpr();
 	else if (MATCH("SUBLINK", 7))
 		return_value = _readSubLink();
+	else if (MATCH("COPYRDF",7))          
+		return_value = _readCopyRdfStmt();
 	else if (MATCH("FIELDSELECT", 11))
 		return_value = _readFieldSelect();
 	else if (MATCH("FIELDSTORE", 10))
