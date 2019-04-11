@@ -360,6 +360,13 @@ _outProjectSet(StringInfo str, const ProjectSet *node)
 }
 
 static void
+_outCopyRdfStmt(StringInfo str, CopyRdfStmt *node)
+{
+	WRITE_NODE_TYPE("COPYRDF");
+	WRITE_STRING_FIELD(filename);
+}
+
+static void
 _outModifyTable(StringInfo str, const ModifyTable *node)
 {
 	WRITE_NODE_TYPE("MODIFYTABLE");
@@ -3088,6 +3095,7 @@ _outQuery(StringInfo str, const Query *node)
 			case T_IndexStmt:
 			case T_NotifyStmt:
 			case T_DeclareCursorStmt:
+			case T_CopyRdfStmt:
 				WRITE_NODE_FIELD(utilityStmt);
 				break;
 			default:
@@ -4294,6 +4302,9 @@ outNode(StringInfo str, const void *obj)
 				break;
 			case T_Var:
 				_outVar(str, obj);
+				break;
+			case T_CopyRdfStmt:
+				_outCopyRdfStmt(str, obj);
 				break;
 			case T_Const:
 				_outConst(str, obj);
