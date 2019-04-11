@@ -5258,6 +5258,16 @@ _copyForeignKeyCacheInfo(const ForeignKeyCacheInfo *from)
 	return newnode;
 }
 
+static CopyRdfStmt *
+_copyCopyRdfStmt(CopyRdfStmt *from)
+{
+	CopyRdfStmt   *newnode = makeNode(CopyRdfStmt);
+
+	COPY_STRING_FIELD(filename);
+
+	return newnode;
+}
+
 
 /*
  * copyObjectImpl -- implementation of copyObject(); see nodes/nodes.h
@@ -6251,6 +6261,9 @@ copyObjectImpl(const void *from)
 			break;
 		case T_GraphDelElem:
 			retval = _copyGraphDelElem(from);
+			break;
+		case T_CopyRdfStmt:
+			retval = _copyCopyRdfStmt(from);
 			break;
 
 			/*
