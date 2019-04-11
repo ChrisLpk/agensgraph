@@ -3336,6 +3336,15 @@ _equalList(const List *a, const List *b)
 	return true;
 }
 
+static bool
+_equalCopyRdfStmt(CopyRdfStmt *a, CopyRdfStmt *b)
+{
+	COMPARE_STRING_FIELD(filename);
+
+	return true;
+}
+
+
 /*
  * Stuff from value.h
  */
@@ -4199,6 +4208,9 @@ equal(const void *a, const void *b)
 			break;
 		case T_GraphDelElem:
 			retval = _equalGraphDelElem(a, b);
+			break;
+		case T_CopyRdfStmt:
+			retval = _equalCopyRdfStmt(a, b);
 			break;
 
 		default:
